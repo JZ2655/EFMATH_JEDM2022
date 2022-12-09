@@ -1,0 +1,32 @@
+user_id,thinklet_id,problem_id,assignment_name,duration,phase,time so far,event,action,answer,time
+168395,216193,9889,"Money, Money, Money",,Start,,Create Thinklet,,,2021-04-20 21:01:24.189000+00:00
+168395,216193,9889,"Money, Money, Money",,Understand,,known,Entered,$25.25 deposit,
+168395,216193,9889,"Money, Money, Money",,Understand,,known,Entered,4 withdrawals of $20.75,
+168395,216193,9889,"Money, Money, Money",,Understand,,known,Entered,deposited $50.75,
+168395,216193,9889,"Money, Money, Money",,Understand,,known,Entered,2 withdrawals of $15 each,
+168395,216193,9889,"Money, Money, Money",,Understand,,known,Entered,overall change in her account,
+168395,216193,9889,"Money, Money, Money",,Understand,,wondering,Entered,why did she only deposit $25.25,
+168395,216193,9889,"Money, Money, Money",,Understand,,wondering,Entered,why did she withdraw $83,
+168395,216193,9889,"Money, Money, Money",,Understand,,wondering,Entered,I wonder how much money she has left?,
+168395,216193,9889,"Money, Money, Money",,Understand,,wondering,Entered,Is it positive or negative?,
+168395,216193,9889,"Money, Money, Money",,Understand,,Estimate,Entered,I think It is negative $35,2021-04-20 21:14:28.325000+00:00
+168395,216193,9889,"Money, Money, Money",,Plan,,strategies,Selected,Write and simplify an expression,
+168395,216193,9889,"Money, Money, Money",,Plan,,strategies,Selected,Use direction arrows for adding & subtracting,
+168395,216193,9889,"Money, Money, Money",,Plan,,strategies,Selected,Use multiplication rules & relationships,
+168395,216193,9889,"Money, Money, Money",,Plan,,write down the plan,Entered,"First, I will add the deposits by lining up the desamolls ( .25 + .75 ) and I will get $76 Next, I will multiply the 4 withdraws of -20.75 so (-20.75 x 4 = -83) Then, I will multiply -15 x 2 times as it said and get -30. Last, I will add -83 and -30 to get -113 then do 113 - 76 = -37.",2021-04-20 21:28:02.494000+00:00
+168395,216193,9889,"Money, Money, Money",0 days 00:15:12.506000000,Solve,0 days 00:15:12.506000000,Start Record,-,,2021-04-20 21:43:15+00:00
+168395,216193,9889,"Money, Money, Money",0 days 00:00:00.000000000,Solve,0 days 00:15:12.506000000,Audio Recording Started,-,,2021-04-20 21:43:15+00:00
+168395,216193,9889,"Money, Money, Money",0 days 00:00:47.000000000,Solve,0 days 00:15:59.506000000,Audio Recording Paused,-,,2021-04-20 21:44:02+00:00
+168395,216193,9889,"Money, Money, Money",0 days 00:00:00.000000000,Solve,0 days 00:15:59.506000000,Pause Record,-,,2021-04-20 21:44:02+00:00
+168395,216193,9889,"Money, Money, Money",0 days 00:00:13.000000000,Solve,0 days 00:16:12.506000000,Stop Record,-,,2021-04-20 21:44:15+00:00
+168395,216193,9889,"Money, Money, Money",0 days 00:00:00.000000000,Solve,0 days 00:16:12.506000000,Audio Recording Stopped,-,,2021-04-20 21:44:15+00:00
+168395,216193,9889,"Money, Money, Money",0 days 00:00:00.000000000,Solve,0 days 00:16:12.506000000,Audio Data Available,-,,2021-04-20 21:44:15+00:00
+168395,216193,9889,"Money, Money, Money",,Review,0 days 00:16:12.506000000,math_checklist,Selected,DOES_MY_ANSWER_MAKE_SENSE,
+168395,216193,9889,"Money, Money, Money",,Review,0 days 00:16:12.506000000,math_checklist,Selected,DID_I_CHECK_MY_WORK,
+168395,216193,9889,"Money, Money, Money",,Review,0 days 00:16:12.506000000,math_checklist,Selected,COULD_SOMEONE_SEE_HOW_I_FOUND_MY_ANSWER,
+168395,216193,9889,"Money, Money, Money",,Review,0 days 00:16:12.506000000,math_checklist,Selected,DID_I_SHOW_HOW_THE_WORK_AND_PLAN_CONNECT,
+168395,216193,9889,"Money, Money, Money",,Review,0 days 00:16:12.506000000,recording_checklist,Selected,My voice is loud and clear,
+168395,216193,9889,"Money, Money, Money",,Review,0 days 00:16:12.506000000,recording_checklist,Selected,My writing is clear,
+168395,216193,9889,"Money, Money, Money",,Review,0 days 00:16:12.506000000,recording_checklist,Selected,I used the highlighter to draw attention,
+168395,216193,9889,"Money, Money, Money",,Review,0 days 00:16:12.506000000,Final Answer,Entered,-35,
+168395,216193,9889,"Money, Money, Money",,End,0 days 00:16:12.506000000,Complete Thinklet,,,2021-04-20 21:45:35.726000+00:00

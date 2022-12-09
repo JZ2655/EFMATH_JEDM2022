@@ -1,0 +1,23 @@
+user_id,thinklet_id,problem_id,assignment_name,duration,phase,time so far,event,action,answer,time
+168395,220707,10013,Express Yourself,,Start,,Create Thinklet,,,2021-05-24 20:45:26.941000+00:00
+168395,220707,10013,Express Yourself,,Understand,,known,Entered,3 math problems,
+168395,220707,10013,Express Yourself,,Understand,,wondering,Entered,Why do they use those numbers,
+168395,220707,10013,Express Yourself,,Plan,,strategies,Selected,Model with an equation,
+168395,220707,10013,Express Yourself,,Plan,,write down the plan,Entered,The first one will be about football the second one will be about money and the last one will be about candy bars. ,2021-05-24 20:47:22.404000+00:00
+168395,220707,10013,Express Yourself,0 days 00:10:20.596000000,Solve,0 days 00:10:20.596000000,Start Record,-,,2021-05-24 20:57:43+00:00
+168395,220707,10013,Express Yourself,0 days 00:00:00.000000000,Solve,0 days 00:10:20.596000000,Audio Recording Started,-,,2021-05-24 20:57:43+00:00
+168395,220707,10013,Express Yourself,0 days 00:00:59.000000000,Solve,0 days 00:11:19.596000000,Pause Record,-,,2021-05-24 20:58:42+00:00
+168395,220707,10013,Express Yourself,0 days 00:00:00.000000000,Solve,0 days 00:11:19.596000000,Audio Recording Paused,-,,2021-05-24 20:58:42+00:00
+168395,220707,10013,Express Yourself,0 days 00:00:02.000000000,Solve,0 days 00:11:21.596000000,Stop Record,-,,2021-05-24 20:58:44+00:00
+168395,220707,10013,Express Yourself,0 days 00:00:00.000000000,Solve,0 days 00:11:21.596000000,Audio Recording Stopped,-,,2021-05-24 20:58:44+00:00
+168395,220707,10013,Express Yourself,0 days 00:00:00.000000000,Solve,0 days 00:11:21.596000000,Audio Data Available,-,,2021-05-24 20:58:44+00:00
+168395,220707,10013,Express Yourself,,Review,0 days 00:11:21.596000000,math_checklist,Selected,Does my answer make sense?,
+168395,220707,10013,Express Yourself,,Review,0 days 00:11:21.596000000,math_checklist,Selected,Did I include units?,
+168395,220707,10013,Express Yourself,,Review,0 days 00:11:21.596000000,math_checklist,Selected,Did I check my work?,
+168395,220707,10013,Express Yourself,,Review,0 days 00:11:21.596000000,math_checklist,Selected,Could someone see how I found my answer?,
+168395,220707,10013,Express Yourself,,Review,0 days 00:11:21.596000000,recording_checklist,Selected,My voice is loud and clear,
+168395,220707,10013,Express Yourself,,Review,0 days 00:11:21.596000000,recording_checklist,Selected,My writing is clear,
+168395,220707,10013,Express Yourself,,Review,0 days 00:11:21.596000000,recording_checklist,Selected,There is no distracting background noise,
+168395,220707,10013,Express Yourself,,Review,0 days 00:11:21.596000000,recording_checklist,Selected,I used the highlighter to draw attention,
+168395,220707,10013,Express Yourself,,Review,0 days 00:11:21.596000000,Final Answer,Entered,"60,-4 and -13",
+168395,220707,10013,Express Yourself,,End,0 days 00:11:21.596000000,Complete Thinklet,,,2021-05-24 20:59:31.549000+00:00

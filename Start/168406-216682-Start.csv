@@ -1,0 +1,22 @@
+user_id,thinklet_id,problem_id,assignment_name,duration,phase,time so far,event,action,answer,time
+168406,216682,9938,"Money, Money, Money V2",,Start,,Create Thinklet,,,2021-04-22 21:13:41.658000+00:00
+168406,216682,9938,"Money, Money, Money V2",,Understand,,known,Entered,$25 deposit,
+168406,216682,9938,"Money, Money, Money V2",,Understand,,known,Entered,4 withdrawals of $20.75 each,
+168406,216682,9938,"Money, Money, Money V2",,Understand,,known,Entered,deposited $50,
+168406,216682,9938,"Money, Money, Money V2",,Understand,,known,Entered,2 withdrawals of $15 each,
+168406,216682,9938,"Money, Money, Money V2",,Understand,,known,Entered,the overall change,
+168406,216682,9938,"Money, Money, Money V2",,Understand,,wondering,Entered,i wonder how much money has she deposit in total.,
+168406,216682,9938,"Money, Money, Money V2",,Understand,,Estimate,Entered,I think its goona be positive because she keeps adding more.,2021-04-22 21:31:15.643000+00:00
+168406,216682,9938,"Money, Money, Money V2",0 days 00:10:29.481000000,Plan,0 days 00:10:29.481000000,write down the plan,Entered,"First, I will multiply-20.75 and 4(-20.75x4).
+Next,i will multiply-15and 2.(-15x2).
+Then,i will add the total amount withdrawals.
+Next, I will add the two deposits (25+50).
+Last, I will subtract the deposits and 
+withdrawals.",2021-04-22 21:41:45.124000+00:00
+168406,216682,9938,"Money, Money, Money V2",0 days 23:15:21.876000000,Solve,0 days 23:25:51.357000000,Start Record,-,,2021-04-23 20:57:07+00:00
+168406,216682,9938,"Money, Money, Money V2",0 days 00:00:00.000000000,Solve,0 days 23:25:51.357000000,Audio Recording Started,-,,2021-04-23 20:57:07+00:00
+168406,216682,9938,"Money, Money, Money V2",0 days 00:00:41.000000000,Solve,0 days 23:26:32.357000000,Stop Record,-,,2021-04-23 20:57:48+00:00
+168406,216682,9938,"Money, Money, Money V2",0 days 00:00:00.000000000,Solve,0 days 23:26:32.357000000,Audio Recording Stopped,-,,2021-04-23 20:57:48+00:00
+168406,216682,9938,"Money, Money, Money V2",0 days 00:00:00.000000000,Solve,0 days 23:26:32.357000000,Audio Data Available,-,,2021-04-23 20:57:48+00:00
+168406,216682,9938,"Money, Money, Money V2",,Review,0 days 23:26:32.357000000,Final Answer,Entered,HI,
+168406,216682,9938,"Money, Money, Money V2",,End,0 days 23:26:32.357000000,Complete Thinklet,,,2021-04-23 20:58:25.956000+00:00

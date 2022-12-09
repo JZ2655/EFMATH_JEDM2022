@@ -1,0 +1,19 @@
+user_id,thinklet_id,problem_id,assignment_name,duration,phase,time so far,event,action,answer,time
+168377,217574,9939,Spending Allowance,,Start,,Create Thinklet,,,2021-04-27 21:11:50.873000+00:00
+168377,217574,9939,Spending Allowance,,Understand,,known,Entered,20-2-2-2-5-5=8,
+168377,217574,9939,Spending Allowance,,Understand,,known,Entered,8+8=16,
+168377,217574,9939,Spending Allowance,,Understand,,known,Entered,he lost 8 doller for buying those thing then he had 8 doller left then he walk his neighbors dog he earn 8 more =16,
+168377,217574,9939,Spending Allowance,,Understand,,Estimate,Entered,he had 20 then he wasted he had 8 left then he walk his neighbor  dog then he earn 8 more so 8+8=16 he got 16 ,2021-04-27 21:21:07.185000+00:00
+168377,217574,9939,Spending Allowance,0 days 00:01:51.461000000,Plan,0 days 00:01:51.461000000,write down the plan,Entered,"lost
+20-2-2-2-5-1=8
+he had 8 left
+earn
+8+8=16
+he earns 8 more for walking his neighbor dog he had the other 8 he get 16 ",2021-04-27 21:22:58.646000+00:00
+168377,217574,9939,Spending Allowance,0 days 00:03:36.354000000,Solve,0 days 00:05:27.815000000,Start Record,-,,2021-04-27 21:26:35+00:00
+168377,217574,9939,Spending Allowance,0 days 00:00:00.000000000,Solve,0 days 00:05:27.815000000,Audio Recording Started,-,,2021-04-27 21:26:35+00:00
+168377,217574,9939,Spending Allowance,0 days 00:00:58.000000000,Solve,0 days 00:06:25.815000000,Stop Record,-,,2021-04-27 21:27:33+00:00
+168377,217574,9939,Spending Allowance,0 days 00:00:00.000000000,Solve,0 days 00:06:25.815000000,Audio Recording Stopped,-,,2021-04-27 21:27:33+00:00
+168377,217574,9939,Spending Allowance,0 days 00:00:00.000000000,Solve,0 days 00:06:25.815000000,Audio Data Available,-,,2021-04-27 21:27:33+00:00
+168377,217574,9939,Spending Allowance,,Review,0 days 00:06:25.815000000,Final Answer,Entered,20-2-2-2-5-1=8 he lost he walk dog 8+8=16,
+168377,217574,9939,Spending Allowance,,End,0 days 00:06:25.815000000,Complete Thinklet,,,2021-04-27 21:29:50.881000+00:00
