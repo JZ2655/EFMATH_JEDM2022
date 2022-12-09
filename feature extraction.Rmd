@@ -1,0 +1,340 @@
+---
+title: "Untitled"
+author: "JZ"
+date: '2022-10-05'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(textreuse)
+library(reshape2)
+library(data.table)
+library(udpipe)
+
+if (file.exists("english-ud-2.0-170801.udpipe")) 
+  ud_model <- udpipe_load_model(file = "english-ud-2.0-170801.udpipe") else {
+    ud_model <- udpipe_download_model(language = "english")
+    ud_model <- udpipe_load_model(ud_model$file_model)
+  }
+
+```
+
+```{r load files}
+# clip name
+clipName <- list.files("./Start", full.names = FALSE)
+
+# read in keyword list and top strategy file
+df_problem <- read.csv("keywordList.csv")
+df_Top2strategiesSelected <- read.csv("df_Top2strategiesSelected.csv")
+
+# create feature file
+phase_contentFeatures <- NULL
+
+```
+
+```{r function}
+
+# check if input contains any numeric value 
+contain_numValue <- 
+  function(x){
+    ifelse(is.na(x), 
+           NA, 
+           as.integer(grepl("[0-9]", x)))}
+
+# check if input is consist of only numeric values (allow white space and punctuation)
+contain_onlyNumValue <- 
+  function(x){
+    y = ifelse(x == "",
+               NA,
+               gsub("[[:punct:][:blank:]]+", "", x))
+    ifelse(is.na(y),NA, as.integer(!grepl("\\D", y)))
+  }
+
+# count the number of numeric values in the entry
+count_numValue <- 
+  function(x){
+    x = gsub("\\.","",x) #get rid off decimal points
+    temp <- unlist(strsplit(gsub("[^[:digit:]]", " ", x), split = " ") )
+    sum( temp != "" )
+  }
+
+# check if input contains operational sign
+contain_opSigns <- 
+  function(x){
+    ifelse(is.na(x),
+           NA,
+           as.integer(grepl("\\+|\\-|\\*|\\/|\\=|\\^", x)))
+  }
+
+# estimate the length of text - nchar (include all characters, space and punctuation)
+count_nChar <- 
+  function(x) {
+    nchar(x)
+  }
+
+# length of text -nWord (only words if pseudo is set to F; all inputs if pseudp=T)
+count_nWords <- 
+  function(x, pseudo=F){
+    ifelse(pseudo, 
+           pattern <- "\\S+", 
+           pattern <- "[[:alpha:]]+")
+    str_count(x, pattern)
+  }
+
+# if input contains questions
+contain_question<- 
+  function(x){
+    as.integer(grepl("\\?|wonder|Wonder|why|Why", x))
+  }
+
+# contains a plan
+contain_plan <- 
+  function(x){
+    as.integer(grepl("1st|2nd|3rd|first|second|third|next|then|i will|plan|going to", tolower(x)))
+  }
+
+# repetition of a previous input
+iden_repetition <- 
+  function(x){
+    n_occur <- data.frame(table(df_clip$answer))
+    repList = n_occur[n_occur$Freq > 1 & n_occur$Var1 != "",]
+    
+    ifelse(x %in% repList$Var1,1,0) #TODO: potential improvement: account for lower,upper case and punctuation to allow small variations
+  }
+
+
+# number of keyword answer contains
+count_keywords <- 
+  function(problemID, x){
+    NumKeywords = 0
+    QuestionKeyword = df_problem[df_problem$problem_id == problemID,'keyword.list']
+    QuestionKeywordList = as.list(strsplit(QuestionKeyword, ", ")[[1]])
+    
+    for (i in QuestionKeywordList) {
+      Tr = as.integer(grepl(i, x, fixed=TRUE))
+      NumKeywords = NumKeywords + Tr
+    }
+    return(NumKeywords)
+  }
+
+# number of top strategies selected
+count_topStrategies <- 
+  function(assignment_name, x){
+    NumTopStrategies = 0
+    TopStrategySelected = df_Top2strategiesSelected[df_Top2strategiesSelected$assignment_name == assignment_name,'Top2Strategies',1]
+    TopStrategySelectedList = as.list(strsplit(TopStrategySelected, "; ")[[1]])
+    
+    x = str_squish(gsub("_|&|and|,"," ",tolower(x)))
+    
+    for (i in TopStrategySelectedList) {
+      Tr = as.integer(grepl(i, x, fixed=TRUE))
+      NumTopStrategies = NumTopStrategies + Tr
+    }
+    return(NumTopStrategies)
+  }
+
+# count number of nouns
+count_nNouns <- 
+  function(x){
+    y = as.data.frame(udpipe_annotate(ud_model, x))
+    y = nrow(subset(y,upos == "NOUN"))
+    return(y)
+  }
+
+# count number of pronouns
+count_nPronouns <- 
+  function(x){
+    y = as.data.frame(udpipe_annotate(ud_model, x))
+    y = nrow(subset(y,upos == "PRON"))
+    return(y)
+  }
+
+# count number of verbs
+count_nVerbs <- 
+  function(x){
+    y = as.data.frame(udpipe_annotate(ud_model, x))
+    y = nrow(subset(y,upos == "VERB"))
+    return(y)
+  }
+
+
+```
+
+```{r extract features}
+
+for (i in clipName) {
+  
+  df_clip = read.csv(paste0("Start/",i)) %>% subset(answer!="")
+  
+  # reset values used in functions
+  n_occur = NULL
+  repList = NULL
+  
+  QuestionKeyword = NULL
+  QuestionKeywordList = NULL
+  
+  # set up parameters of each clip
+  problemID = df_clip[1,3]
+  assignment_name = df_clip[1,4]
+  my_list <- as.list(df_clip$answer)
+  MyList = NULL
+  
+  rownames(df_clip) <- 1:nrow(df_clip)
+  df_clip$rowNumber = rownames(df_clip)
+  df_clip$understand_known = ifelse(df_clip$event == "known",1,0)
+  df_clip$understand_wonder = ifelse(df_clip$event == "wondering",1,0)
+  df_clip$understand_estimate = ifelse(df_clip$event == "Estimate",1,0)
+  df_clip$plan_strategy = ifelse(df_clip$event == "strategies",1,0)
+  df_clip$plan_writePlan = ifelse(df_clip$event == "write down the plan",1,0)
+  
+  df_clip$contain_numValue = contain_numValue(df_clip$answer)
+  df_clip$contain_onlyNumValue = ifelse(df_clip$answer=="",0,contain_onlyNumValue(df_clip$answer))
+  df_clip$count_numValue = as.numeric(as.character(lapply(df_clip$answer,count_numValue)))
+  df_clip$contain_opSigns = contain_opSigns(df_clip$answer)
+  df_clip$count_nChar = count_nChar(df_clip$answer)
+  df_clip$count_nWords = count_nWords(df_clip$answer, pseudo=T)
+  df_clip$contain_question = contain_question(df_clip$answer)
+  df_clip$contain_plan = contain_plan(df_clip$answer)
+  df_clip$iden_repetition = iden_repetition(df_clip$answer)
+  df_clip$count_keywords = count_keywords(problemID, df_clip$answer)
+  df_clip$count_topStrategies = count_topStrategies(df_clip$assignment_name, df_clip$answer)
+  df_clip$count_nNouns = apply(df_clip,1,count_nNouns)
+  df_clip$count_nPronouns = apply(df_clip,1,count_nPronouns)
+  df_clip$count_nVerbs = apply(df_clip,1,count_nVerbs)
+  
+  # calculate similarity
+  
+  for(i in c(1:nrow(df_clip))){
+    tryCatch({
+      QuestionText = df_problem[df_problem$problem_id == problemID,'problem_question_clean']
+      QuestionText_nWord = lengths(gregexpr("\\W+", QuestionText))
+      
+      x = my_list[[i]]
+      
+      InputText_nWord = lengths(gregexpr("\\W+", x))
+      
+      AlignResult = align_local(QuestionText, x)
+      AlignMax = align_local(QuestionText, QuestionText)
+      
+      estimated_similarity = (AlignResult$score/InputText_nWord*QuestionText_nWord)/AlignMax$score
+      
+      newRow = cbind(i,x,estimated_similarity)
+      MyList = rbind(MyList,newRow)
+      
+    }, error=function(e){"ERROR\n"})
+  }
+  
+  MyList = as.data.frame(MyList)
+  df_clip <- full_join(df_clip, MyList, by = c("answer" = "x", "rowNumber" = "i"), all.x=T)
+  df_clip$estimated_similarity = as.numeric(df_clip$estimated_similarity)
+  
+  
+  # aggregate features
+  #thinklet level aggregation
+  df_agg_thinklet <- 
+    df_clip %>% 
+    group_by(user_id, thinklet_id, assignment_name) %>%  #thinklet aggregation
+    summarize(
+      N_thinklet = n(),
+      understand_known = sum(understand_known),
+      understand_wonder = sum(understand_wonder),
+      understand_estimate = sum(understand_estimate),
+      plan_strategy = sum(plan_strategy),
+      plan_writePlan = sum(plan_writePlan),
+      plan_topStrategies = sum(count_topStrategies)
+    )
+  
+  #phase level aggregatioon
+  df_agg_phase <-
+    df_clip %>%
+    group_by(user_id, thinklet_id, phase) %>%
+    summarize(
+      N_phase = n(),
+      avg_contain_numValue = sum(contain_numValue)/N_phase,
+      avg_contain_onlyNumValue = sum(contain_onlyNumValue)/N_phase,
+      
+      avg_count_numValue = mean(count_numValue, na.rm = T),
+      stdv_count_numValue = sd(count_numValue, na.rm = T),
+      max_count_numValue = max(count_numValue, na.rm = T),
+      
+      avg_contain_opSigns = sum(contain_opSigns)/N_phase,
+      
+      avg_count_Char = mean(count_nChar, na.rm = T),
+      sdtv_count_Char = sd(count_nChar, na.rm = T),
+      max_count_Char = max(count_nChar, na.rm = T),
+      
+      avg_count_nWords = mean(count_nWords, na.rm = T),
+      stdv_count_nWords = sd(count_nWords, na.rm = T),
+      max_count_nWords = max(count_nWords, na.rm = T),
+      
+      avg_contain_question = sum(contain_question)/N_phase,
+      avg_contain_plan = sum(contain_plan)/N_phase,
+      avg_iden_repetition = sum(iden_repetition)/2/N_phase,
+      
+      avg_count_keywords = mean(count_keywords),
+      stdv_count_keywords = sd(count_keywords),
+      max_count_keywords = max(count_keywords),
+      
+      avg_estimated_similarity = mean(estimated_similarity, na.rm = T),
+      stdv_estimated_similarity = sd(estimated_similarity, na.rm = T),
+      max_estimated_similarity = max(estimated_similarity, na.rm = T),
+      
+      avg_count_nNouns = mean(count_nNouns, na.rm = T),
+      stdv_count_nNouns = sd(count_nNouns, na.rm = T),
+      max_count_nNouns = max(count_nNouns, na.rm = T),
+      
+      avg_count_nPronouns = mean(count_nPronouns, na.rm = T),
+      stdv_count_nPronouns = sd(count_nPronouns, na.rm = T),
+      max_count_nPronouns = max(count_nPronouns, na.rm = T),
+      
+      avg_count_nVerbs = mean(count_nVerbs, na.rm = T),
+      stdv_count_nVerbs = sd(count_nVerbs, na.rm = T),
+      max_count_nVerbs = max(count_nVerbs, na.rm = T),
+    )
+  
+  df_agg_phase_long <- reshape2::melt(df_agg_phase, id = 1:3)
+  df_agg_phase_long$colName <- paste0(df_agg_phase_long$phase,"_",df_agg_phase_long$variable)
+  df_agg_phase_wide <- spread(select(df_agg_phase_long,-user_id,-thinklet_id,-phase, -variable), key = colName, value = value)
+  
+  # strategy select
+  df_strategiesSelected <-
+    ifelse(nrow(subset(df_clip, phase == "Plan" & event == "strategies"))!=0,
+           df_clip %>%
+             subset(phase == "Plan" & event == "strategies") %>%
+             select(assignment_name, phase, event, answer) %>%
+             group_by(phase,event) %>%
+             mutate(answer = str_squish(gsub("_|&|and|,"," ",tolower(answer)))) %>%
+             summarise(strategiesSelected = str_c(answer, collapse = ";"), .groups = 'drop') %>%
+             select(strategiesSelected),
+           NA) %>%
+    as.data.frame
+  colnames(df_strategiesSelected)[1] <- "strategiesSelected"
+  
+  # combine all features
+  phase_features = 
+    cbind(df_agg_thinklet, df_agg_phase_wide) %>% 
+    cbind(.,df_strategiesSelected)
+  
+  phase_contentFeatures = rbind(phase_contentFeatures, phase_features)
+  
+}
+
+# replace inf values with NAs
+phase_contentFeatures = do.call(data.frame, lapply(phase_contentFeatures, function(x) replace(x, is.infinite(x), NA)))
+
+# export feature file
+write.csv(as.data.frame(phase_contentFeatures),paste0("Features_aggToPhase_",Sys.Date(),".csv"), row.names = FALSE, na = "")
+
+
+
+```
+
+
+
